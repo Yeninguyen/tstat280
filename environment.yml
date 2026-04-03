@@ -1,0 +1,23 @@
+name: tstat280
+
+channels:
+  - conda-forge
+
+dependencies:
+  # Python version
+  - python=3.10
+
+  # Core data science libraries
+  - numpy=1.26
+  - pandas=2.2
+  - matplotlib=3.8
+  - seaborn=0.13
+
+  # Machine learning
+  - scikit-learn=1.5
+  - scipy=1.13
+
+  # Jupyter environment
+  - jupyterlab=4.2
+  - notebook=7.2
+  - ipykernel
