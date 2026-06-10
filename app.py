@@ -4,11 +4,10 @@ import pandas as pd
 import numpy as np
 
 # ── App title (must be first Streamlit command) ──
-st.set_page_config(page_title="Tacoma Home Price Estimator", layout="centered")
-st.title("Tacoma Home Price Estimator")
+st.set_page_config(page_title="Home Price Estimator", layout="centered")
+st.title("Home Price Estimator")
 
 # ── Block 1: Load model, scaler, and column names ──
-# Save LASSO model (not the categorical model)
 model = joblib.load("model.pkl")
 scaler = joblib.load("scaler.pkl")
 training_columns = joblib.load("columns.pkl")
@@ -22,7 +21,7 @@ with st.sidebar:
     house_size = st.slider("House Size (sqft)", 300, 7000, 1600, step=50)
     year_built = st.slider("Year Built", 1900, 2025, 1990)
     lot_size = st.number_input("Lot Size (sqft)", min_value=500, max_value=100000, value=6000, step=500)
-    hoa_fee = st.number_input("Monthly HOA Fee ($)", min_value=0, max_value=5000, value=0, step=25)
+    hoa_fee = st.number_input("HOA Fee ($)", min_value=0, max_value=5000, value=0, step=25)
 
     mls_area = st.selectbox("MLS Area", [
         "13 - North Tacoma (base)",
@@ -47,12 +46,30 @@ with st.sidebar:
         "87 - Puyallup", "88 - Puyallup", "89 - Graham/Frederickson",
         "94 - Browns Point", "95 - Browns Point", "99 - Spanaway", "_99",
     ])
-    cooling = st.selectbox("Cooling", ["Ductless Mini Split", "Forced Air", "Heat Pump", "None", "Other"])
-    heating = st.selectbox("Heating", ["Ductless Mini Split", "Forced Air", "Heat Pump", "Wall Unit", "Other"])
-    sewer = st.selectbox("Sewer", ["Septic Tank", "Sewer Connected"])
-    parking = st.selectbox("Parking Features", ["Detached Garage", "Off Street Parking", "Other"])
-    latitude = st.number_input("Latitude", value=47.25)
-    longitude = st.number_input("Longitude", value=-122.44)
+    cooling = st.selectbox("Cooling", [
+    "Ductless Mini Split",
+    "Forced Air",
+    "Heat Pump",
+    "None",
+    "Other"
+])
+    heating = st.selectbox("Heating", [
+    "Ductless Mini Split",
+    "Forced Air",
+    "Heat Pump",
+    "Wall Unit",
+    "Other"
+])
+    sewer = st.selectbox("Sewer", [
+    "Septic Tank",
+    "Sewer Connected"
+])
+    parking = st.selectbox("Parking Features", [
+    "Detached Garage",
+    "Off Street Parking",
+    "Other"
+])
+
 
 # ── Block 3: Prepare data and predict ──
 
@@ -60,8 +77,8 @@ with st.sidebar:
 input_data = {
     "beds": beds,
     "Bathrooms": bathrooms,
-    "Latitude": latitude,
-    "Longitude": longitude,
+    "Latitude": 47.25,
+    "Longitude": -122.44,
     "house_size": house_size,
     "Lot Size Square Feet": lot_size,
     "Year Built": year_built,
